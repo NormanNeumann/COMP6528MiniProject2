@@ -1,4 +1,4 @@
-from train_autoencoder import train_autoencoder
+from train import train_autoencoder
 from data_utils import load_image
 from feature_extractor import extract_features
 from clustering import cluster_pixels

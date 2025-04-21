@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 from config import SAVE_DIR, DEVICE
-from train_autoencoder import SimpleAE
+from train import SimpleAE
 
 def extract_features(img):
     device = torch.device(DEVICE)
