@@ -1,19 +1,36 @@
-## 程序使用
-将需要分割的图像命名为input.jpg放在data路径下，检查model路径和output路径下是否为空。运行main.py
+## 程序使用 (Usage)
+1. 将需要分割的图像命名为 `input.jpg` 并放置于 `data` 文件夹中。  
+   Ensure the image to be segmented is named `input.jpg` and placed in the `data` directory.
+2. 检查 `model` 文件夹和 `output` 文件夹是否为空，若不为空请清空这两个文件夹。  
+   Check that the `model` and `output` directories are empty; if not, clear them.
+3. 在 `dist` 文件夹下双击运行 `run.exe`（无需 Python 环境）或在解释器中运行 `main.py`。  
+   Double-click `run.exe` in the `dist` directory (no Python environment required), or run `main.py` in a Python interpreter.
 
 ## 参数调优 (Hyperparameter Tuning)
-以下是在无监督单图分割流程中的主要调参项及调优建议。
+以下是在无监督单图分割流程中的主要调参项及调优建议。  
 Below are the key hyperparameters and tuning guidelines for the single-image unsupervised segmentation pipeline.
 
 ### 1. 聚类数 K (Number of clusters K)
-- **含义 (Meaning)**：分割的类别数，例如建筑、天空、行人对应 K=3。  
-- **调参思路 (Tuning tips)**：  
-  1. **肘部法则 (Elbow Method)**：扫描 K=2~6，绘制簇内 SSE 曲线，选择拐点。  
-  2. **视觉验证 (Visual Validation)**：对比不同 K 的分割结果，判断过拟合或欠分情况。
+- **含义 (Meaning)**: 分割的类别数，例如建筑、天空、行人对应 `K=3`（理想情况）。  
+  The number of segmentation classes; for example, buildings, sky, and pedestrians correspond to `K=3` in an ideal case.
+- **调参思路 (Tuning tips)**:  
+  1. **近似测试 (Approximate testing)**: 如果理想 `K=3`，则尝试 `K=2` 到 `6`，并从中选择最佳结果。  
+     If the ideal `K` is 3, try values from `2` to `6` and choose the best output.
+  2. **视觉验证 (Visual validation)**: 比较不同 `K` 值的分割效果，判断是否过分或欠分。  
+     Compare segmentation outputs under different `K` values to judge over-segmentation or under-segmentation.
 
-### 2. 形态学核大小 MORPH_KERNEL_SIZE (Morphological kernel size)
-- **含义**：开运算时的腐蚀/膨胀核尺寸。  
-- **调参思路**：  
-  - **小核 (3×3)**：保留小区域，去噪效果弱。  
-  - **大核 (7×7)**：去噪强，但可能丢失小目标。
+### 2. AE 训练轮数 AE_EPOCHS (AE training epochs AE_EPOCHS)
+- **含义 (Meaning)**: 自编码器的训练轮次数。  
+  The number of epochs for training the autoencoder.
+- **调参思路 (Tuning tips)**:  
+  - 将 `AE_EPOCHS` 设置为损失几乎不再下降的临界点。  
+    Set `AE_EPOCHS` at the point where the loss curve levels off.
 
+### 3. 形态学核大小 MORPH_KERNEL_SIZE (Morphological kernel size)
+- **含义 (Meaning)**: 后处理过程中开运算的腐蚀/膨胀核尺寸。  
+  The size of the erosion/dilation kernel in the opening operation during post-processing.
+- **调参思路 (Tuning tips)**:  
+  - **小核 (3×3)**: 保留小目标，去噪效果较弱。  
+    Small kernel (`3×3`): preserves small details with weaker denoising.
+  - **大核 (7×7)**: 强力去噪，但可能丢失小目标。  
+    Large kernel (`7×7`): stronger denoising, but may lose small objects.
