@@ -1,3 +1,6 @@
+## 程序使用
+将需要分割的图像命名为input.jpg放在data路径下，检查model路径和output路径下是否为空。运行main.py
+
 ## 参数调优 (Hyperparameter Tuning)
 以下是在无监督单图分割流程中的主要调参项及调优建议。
 Below are the key hyperparameters and tuning guidelines for the single-image unsupervised segmentation pipeline.
@@ -14,14 +17,3 @@ Below are the key hyperparameters and tuning guidelines for the single-image uns
   - **小核 (3×3)**：保留小区域，去噪效果弱。  
   - **大核 (7×7)**：去噪强，但可能丢失小目标。
 
-### 3. 随机种子 RANDOM_STATE (Random seed)
-- **含义**：控制 KMeans 随机初始化。  
-- **调参思路**：  
-  - 更换 `RANDOM_STATE`，多次运行检查分割稳定性。  
-  - 可增加 `n_init` 参数提升聚类稳定性。
-
-### 4. 预处理缩放比例 (Optional: Preprocessing Resize Ratio)
-- **含义**：将输入图像先缩放再提取特征。  
-- **调参思路**：  
-  - **0.5×、0.75×** 可加速；  
-  - 根据计算资源与精度需求选择缩放比例。

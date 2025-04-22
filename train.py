@@ -37,7 +37,7 @@ class PatchDataset(Dataset):
         return self.transform(patch), self.transform(patch) # (input, target)
 
 class SimpleAE(nn.Module):
-    def __init__(self, in_ch=3, feat_ch=32): # in_ch: input channels = 3 for RGB images; feat_ch: feature channels, the num of output channel for the first layer of the encoder.
+    def __init__(self, in_ch=3, feat_ch=64): # in_ch: input channels = 3 for RGB images; feat_ch: feature channels, the num of output channel for the first layer of the encoder.
         super().__init__()
         self.encoder = nn.Sequential(
             # kernel_size = 3, stride = 2, padding = 1
@@ -46,7 +46,7 @@ class SimpleAE(nn.Module):
             # Padding 1 keeps the output size consistent with downsampling.
             # 选取最常用的3x3卷积核，步长2即每次下采样至1/4大小，补偿1保持输出尺寸与下采样一致。
 
-            # Chanel 3 -> 32 -> 64 -> 128
+            # Chanel 3 -> 64 -> 128 -> 256
             nn.Conv2d(in_ch, feat_ch, 3, 2, 1),
             nn.ReLU(True),
             nn.Conv2d(feat_ch, feat_ch*2, 3, 2, 1),
