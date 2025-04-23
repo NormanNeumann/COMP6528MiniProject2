@@ -3,8 +3,8 @@
    Ensure the image to be segmented is named `input.jpg` and placed in the `data` directory.
 2. 检查 `model` 文件夹和 `output` 文件夹是否为空，若不为空请清空这两个文件夹。  
    Check that the `model` and `output` directories are empty; if not, clear them.
-3. 在 `dist` 文件夹下双击运行 `run.exe`（无需 Python 环境）或在解释器中运行 `main.py`。  
-   Double-click `run.exe` in the `dist` directory (no Python environment required), or run `main.py` in a Python interpreter.
+3. 双击运行 `run.bat`或在解释器中运行 `main.py`。  
+   Double-click `run.bat`, or run `main.py` in a Python interpreter.
 
 ## 参数调优 (Hyperparameter Tuning)
 以下是在无监督单图分割流程中的主要调参项及调优建议。  
